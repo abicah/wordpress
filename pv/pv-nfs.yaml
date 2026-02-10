@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: pv-nfs-content
+ labels:
+   type: nfs
+spec:
+ capacity:
+   storage: 10Gi
+ accessModes:
+   - ReadWriteMany
+ persistentVolumeReclaimPolicy: Retain
+ storageClassName: nfs-static
+ nfs:
+   server: 10.20.77.14
+   path: /srv/nfs/wp-content
+ mountOptions:
+   - vers=3
+   - rw
+   - hard
+   - timeo=600
+   - retrans=5

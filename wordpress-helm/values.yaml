@@ -1,0 +1,39 @@
+# Namespace
+namespace: wordpress
+
+# Replicas
+replicaCount: 1
+
+# Image
+image:
+  repository: wordpress
+  tag: "6.5-apache"
+
+# Service
+service:
+  type: ClusterIP
+  port: 80
+
+# Ingress
+ingress:
+  enabled: true
+  host: wordpress.afpa-devops.lab
+
+# Storage PV/PVC
+storage:
+  pvEnabled: true
+  pvName: pv-nfs-content
+  pvcName: pvc-wp-content
+  size: 10Gi
+  storageClassName: nfs-static
+  nfs:
+    server: 10.20.77.14
+    path: /srv/nfs/wp-content
+  mountPath: /var/www/html/wp-content
+
+# Database
+wordpress:
+  dbHost: "10.20.77.13:3306"
+  dbName: "wordpress"
+  dbUser: "wp_user"
+  dbPassword: "P@ssw0rd34"
