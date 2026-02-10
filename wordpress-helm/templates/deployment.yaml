@@ -44,3 +44,4 @@ spec:
         - name: wp-content
           persistentVolumeClaim:
             claimName: {{ .Values.storage.pvcName }}
+            
