@@ -9,6 +9,10 @@ image:
   repository: wordpress
   tag: "6.5-apache"
 
+# Container
+container:
+  port: 80
+
 # Service
 service:
   type: ClusterIP
@@ -37,3 +41,16 @@ wordpress:
   dbName: "wordpress"
   dbUser: "wp_user"
   dbPassword: "P@ssw0rd34"
+
+# Probes
+probes:
+  readiness:
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 5
+  liveness:
+    initialDelaySeconds: 90
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 3

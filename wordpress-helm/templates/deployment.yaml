@@ -19,7 +19,7 @@ spec:
         - name: wordpress
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.container.port }}
           envFrom:
             - configMapRef:
                 name: wordpress-config
@@ -28,19 +28,19 @@ spec:
           readinessProbe:
             httpGet:
               path: /
-              port: 80
-            initialDelaySeconds: 60
-            periodSeconds: 15
-            timeoutSeconds: 5
-            failureThreshold: 5
+              port: {{ .Values.container.port }}
+            initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
+            failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
           livenessProbe:
             httpGet:
               path: /
-              port: 80
-            initialDelaySeconds: 90
-            periodSeconds: 30
-            timeoutSeconds: 5
-            failureThreshold: 3
+              port: {{ .Values.container.port }}
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
           volumeMounts:
             - name: wp-content
               mountPath: {{ .Values.storage.mountPath }}
