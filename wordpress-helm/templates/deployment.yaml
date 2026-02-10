@@ -29,14 +29,18 @@ spec:
             httpGet:
               path: /
               port: 80
-            initialDelaySeconds: 10
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 5
           livenessProbe:
             httpGet:
               path: /
               port: 80
-            initialDelaySeconds: 30
-            periodSeconds: 20
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
           volumeMounts:
             - name: wp-content
               mountPath: {{ .Values.storage.mountPath }}
@@ -44,4 +48,3 @@ spec:
         - name: wp-content
           persistentVolumeClaim:
             claimName: {{ .Values.storage.pvcName }}
-            
